@@ -3,33 +3,40 @@
 import { motion } from "framer-motion";
 
 interface SectionHeaderProps {
-  title: string;
+  title: React.ReactNode;
   subtitle?: string;
+  subHeading?: string;
   className?: string;
+  align?: "left" | "center";
 }
 
-export default function SectionHeader({ title, subtitle, className = "" }: SectionHeaderProps) {
+export default function SectionHeader({ title, subtitle, subHeading, align = "left", className = "" }: SectionHeaderProps) {
+  const alignmentClass = align === "center" ? "items-center text-center" : "items-start text-left";
+  const justifyClass = align === "center" ? "justify-center" : "justify-start";
+
   return (
-    <div className={`flex flex-col items-start gap-4 mb-20 ${className}`}>
-      <div className="flex items-center gap-6">
+    <div className={`flex flex-col ${alignmentClass} mb-12 md:mb-16 ${className}`}>
+      {subHeading && (
+        <div className={`mb-3 flex items-center ${justifyClass} gap-3`}>
+          <span className="h-[3px] w-10 bg-racing-yellow skew-x-[-20deg]" />
+          <span className="text-sm font-black uppercase tracking-[0.2em] text-white/60">
+            {subHeading}
+          </span>
+          {align === "center" && (
+            <span className="h-[3px] w-10 bg-racing-yellow skew-x-[-20deg]" />
+          )}
+        </div>
+      )}
+      
+      <div className={`flex ${alignmentClass}`}>
         <motion.h2 
-          initial={{ opacity: 0, x: -30 }}
-          whileInView={{ opacity: 1, x: 0 }}
+          initial={{ opacity: 0, x: align === "center" ? 0 : -30, y: align === "center" ? 30 : 0 }}
+          whileInView={{ opacity: 1, x: 0, y: 0 }}
           viewport={{ once: true }}
           className="text-4xl md:text-5xl font-black italic text-white uppercase tracking-tighter"
         >
           {title}
         </motion.h2>
-        
-        {/* Checkered Flag Decoration */}
-        <div className="flex h-12 w-28 opacity-15 overflow-hidden">
-          {[...Array(8)].map((_, i) => (
-            <div key={i} className="flex-1 flex flex-col">
-              <div className={`flex-1 ${i % 2 === 0 ? "bg-white" : "bg-transparent"}`} />
-              <div className={`flex-1 ${i % 2 !== 0 ? "bg-white" : "bg-transparent"}`} />
-            </div>
-          ))}
-        </div>
       </div>
       
       {subtitle && (
@@ -38,7 +45,9 @@ export default function SectionHeader({ title, subtitle, className = "" }: Secti
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true }}
           transition={{ delay: 0.2 }}
-          className="text-zinc-500 font-bold italic text-xl uppercase tracking-widest border-l-4 border-racing-yellow pl-4"
+          className={`mt-4 text-zinc-400 font-medium md:text-lg max-w-2xl ${
+            align === 'left' ? '' : 'mx-auto'
+          }`}
         >
           {subtitle}
         </motion.p>

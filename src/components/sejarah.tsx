@@ -4,12 +4,12 @@ import { motion } from "framer-motion";
 import SectionHeader from "./section-header";
 
 const milestones = [
-  { year: "2019", text: "Establishment Lowkos auto clinic", position: "top", color: "yellow" },
-  { year: "2020", text: "Launchon bam solusi perawata mesin otomotif", position: "bottom", color: "red" },
-  { year: "2021", text: "Launchon main produk perawata halempans", position: "top", color: "yellow" },
-  { year: "2023", text: "Launchon bernputan produk", position: "bottom", color: "red" },
-  { year: "2025", text: "Menyediakan mesin mesin, sanda kendaraan.", position: "top", color: "yellow" },
-  { year: "2024", text: "Expansion market dan resoc", position: "bottom", color: "red" },
+  { year: "2019", text: "Launching Produk Fuel Additive Pertama", position: "top", color: "yellow" },
+  { year: "2020", text: "Pengembangan Produk Octane Booster ", position: "bottom", color: "red" },
+  { year: "2021", text: "Ekspansi Jaringan Distribusi", position: "top", color: "yellow" },
+  { year: "2023", text: "Pengembangan Produk Engine Treatment", position: "bottom", color: "red" },
+  { year: "2024", text: "Launching Produk Tire Treatment", position: "top", color: "yellow" },
+  { year: "2025", text: "Membuka Peluang Bisnis Maklon", position: "bottom", color: "red" },
 ];
 
 function SmallCheckeredFlag() {
@@ -27,8 +27,13 @@ function SmallCheckeredFlag() {
 export default function Timeline() {
   return (
     <section id="sejarah" className="py-20 bg-lowkos-dark overflow-hidden">
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        <SectionHeader title="Sejarah Kami" />
+      <div className="container mx-auto px-4 lg:px-8">
+        <SectionHeader 
+          subHeading="Perjalanan Lowkos" 
+          title="Sejarah Kami" 
+          align="center"
+          className="mb-12 gap-0" 
+        />
 
         {/* Desktop Timeline */}
         <div className="hidden md:block relative mt-32 mb-20">

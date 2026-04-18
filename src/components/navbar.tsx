@@ -1,4 +1,7 @@
+"use client";
+
 import Link from "next/link";
+import { useEffect, useState } from "react";
 import { Menu } from "lucide-react";
 import { Button } from "./ui/button";
 
@@ -12,19 +15,39 @@ const navLinks = [
 ];
 
 export default function Navbar() {
+  const [isScrolled, setIsScrolled] = useState(false);
+
+  useEffect(() => {
+    const handleScroll = () => {
+      setIsScrolled(window.scrollY > 16);
+    };
+
+    handleScroll();
+    window.addEventListener("scroll", handleScroll, { passive: true });
+
+    return () => {
+      window.removeEventListener("scroll", handleScroll);
+    };
+  }, []);
+
   return (
-    <header className="fixed top-0 z-[100] w-full bg-black/80 backdrop-blur-md">
+    <header
+      className={`fixed top-0 z-[100] w-full transition-all duration-300 transform-gpu ${
+        isScrolled
+          ? "bg-[#050505]/95 border-b border-white/10 shadow-[0_10px_30px_rgba(0,0,0,0.22)]"
+          : "bg-transparent border-b border-transparent shadow-none"
+      }`}
+    >
       <div className="container mx-auto px-4 lg:px-8 h-20 flex items-center justify-between">
         
         {/* Logo */}
-        <Link href="/" className="flex flex-col items-start gap-0 group">
-          <span className="text-2xl font-black italic tracking-tighter leading-none">
-            <span className="text-white">LOW</span>
-            <span className="text-racing-yellow">KOS</span>
-          </span>
-          <span className="text-[8px] uppercase font-bold text-racing-yellow tracking-[0.3em] leading-none">
-            Auto Clinic
-          </span>
+        <Link href="/" className="flex items-center gap-0 group mt-3">
+          {/* eslint-disable-next-line @next/next/no-img-element */}
+          <img 
+            src="https://res.cloudinary.com/dxgoshyei/image/upload/v1776516271/Lowkos_Logo_dark_xc6vns.svg" 
+            alt="Lowkos Auto Clinic Logo"
+            className="h-10 w-auto transition-transform duration-300 group-hover:scale-105"
+          />
         </Link>
 
         {/* Desktop Nav - Centered */}
