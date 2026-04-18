@@ -1,7 +1,6 @@
 import Hero from "@/components/hero";
 import Sejarah from "@/components/sejarah";
 import VisiMisi from "@/components/visi-misi";
-import WhyUs from "@/components/why-us";
 import Advantages from "@/components/advantages";
 import Products from "@/components/products";
 import Testimonials from "@/components/testimonials";
