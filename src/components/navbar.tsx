@@ -3,7 +3,7 @@
 import Link from "next/link";
 import { useEffect, useState } from "react";
 import { usePathname } from "next/navigation";
-import { ChevronDown, Menu } from "lucide-react";
+import { ChevronDown, Menu, X } from "lucide-react";
 import { Button } from "./ui/button";
 import { PRODUCTS, type ProductCategory } from "@/lib/products";
 
@@ -39,6 +39,8 @@ const PRODUCTS_BY_CATEGORY: Record<ProductCategory, Array<{ name: string; href: 
 
 export default function Navbar() {
   const [isScrolled, setIsScrolled] = useState(false);
+  const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
+  const [openMobileCategory, setOpenMobileCategory] = useState<ProductCategory | null>(null);
   const pathname = usePathname();
 
   useEffect(() => {
@@ -53,6 +55,24 @@ export default function Navbar() {
       window.removeEventListener("scroll", handleScroll);
     };
   }, []);
+
+  useEffect(() => {
+    setIsMobileMenuOpen(false);
+    setOpenMobileCategory(null);
+  }, [pathname]);
+
+  useEffect(() => {
+    if (!isMobileMenuOpen) {
+      return;
+    }
+
+    const previousOverflow = document.body.style.overflow;
+    document.body.style.overflow = "hidden";
+
+    return () => {
+      document.body.style.overflow = previousOverflow;
+    };
+  }, [isMobileMenuOpen]);
 
   return (
     <header
@@ -148,13 +168,139 @@ export default function Navbar() {
 
         {/* Mobile Menu Trigger */}
         <div className="flex items-center lg:hidden">
-          <Button variant="ghost" size="icon" className="text-white hover:bg-zinc-800">
+          <Button
+            variant="ghost"
+            size="icon"
+            className="text-white hover:bg-zinc-800"
+            onClick={() => setIsMobileMenuOpen((prev) => !prev)}
+            aria-label={isMobileMenuOpen ? "Tutup menu" : "Buka menu"}
+            aria-expanded={isMobileMenuOpen}
+            aria-controls="mobile-nav-menu"
+          >
             <Menu className="w-6 h-6" />
           </Button>
         </div>
 
         {/* Empty div for balancing on desktop if needed, or social icons (Mockup shows them in footer) */}
         <div className="hidden lg:block w-32" />
+      </div>
+
+      <div
+        className={`fixed inset-0 z-[140] lg:hidden transition-opacity duration-300 ${
+          isMobileMenuOpen ? "pointer-events-auto opacity-100" : "pointer-events-none opacity-0"
+        }`}
+      >
+        <button
+          type="button"
+          className="absolute inset-0 bg-black/75 backdrop-blur-[1px]"
+          aria-label="Tutup menu"
+          onClick={() => setIsMobileMenuOpen(false)}
+        />
+
+        <aside
+          id="mobile-nav-menu"
+          className={`absolute left-0 top-0 h-full w-[80%] max-w-[320px] border-r border-white/10 bg-black px-4 pb-6 pt-8 shadow-[16px_0_40px_rgba(0,0,0,0.55)] transition-transform duration-300 sm:w-[72%] ${
+            isMobileMenuOpen ? "translate-x-0" : "-translate-x-full"
+          }`}
+          aria-label="Menu mobile"
+        >
+          <div className="mb-7 flex items-center justify-between border-b border-white/10 pb-4">
+            <Link href="/" className="flex items-center" onClick={() => setIsMobileMenuOpen(false)}>
+              {/* eslint-disable-next-line @next/next/no-img-element */}
+              <img
+                src="https://res.cloudinary.com/dxgoshyei/image/upload/v1776516271/Lowkos_Logo_dark_xc6vns.svg"
+                alt="Lowkos Auto Clinic Logo"
+                className="h-8 w-auto"
+              />
+            </Link>
+
+            <Button
+              variant="ghost"
+              size="icon"
+              className="text-white hover:bg-white/10"
+              onClick={() => setIsMobileMenuOpen(false)}
+              aria-label="Tutup menu"
+            >
+              <X className="h-5 w-5" />
+            </Button>
+          </div>
+
+          <div className="space-y-2 rounded-t-xl border border-white/10 border-b-0 bg-[#101010] p-2">
+            {navLinks.map((link) => {
+              const isActive =
+                link.href === "/"
+                  ? pathname === "/"
+                  : pathname.startsWith(link.href);
+
+              return (
+                <Link
+                  key={link.name}
+                  href={link.href}
+                  className={`block rounded-md border-l-4 px-3 py-2 text-sm font-semibold transition-colors duration-200 ${
+                    isActive
+                      ? "border-racing-yellow bg-white/12 text-racing-yellow"
+                      : "border-transparent text-white/90 hover:bg-white/8"
+                  }`}
+                >
+                  {link.name}
+                </Link>
+              );
+            })}
+          </div>
+
+          <div className="space-y-2 rounded-b-xl border border-white/10 bg-[#101010] p-2 pt-3">
+            {PRODUCT_CATEGORIES.map((category) => {
+              const isOpen = openMobileCategory === category;
+              const contentId = `mobile-category-${category.toLowerCase().replace(/\s+/g, "-")}`;
+
+              return (
+                <div key={category} className="rounded-lg border border-white/10 bg-[#161616]">
+                  <button
+                    type="button"
+                    className="flex w-full items-center justify-between px-3 py-2.5 text-left"
+                    onClick={() =>
+                      setOpenMobileCategory((prev) => (prev === category ? null : category))
+                    }
+                    aria-expanded={isOpen}
+                    aria-controls={contentId}
+                  >
+                    <span className="text-[11px] font-bold uppercase tracking-[0.12em] text-white/80">
+                      {category}
+                    </span>
+                    <ChevronDown
+                      className={`size-4 text-white/70 transition-transform duration-200 ${
+                        isOpen ? "rotate-180" : "rotate-0"
+                      }`}
+                    />
+                  </button>
+
+                  {isOpen && (
+                    <div id={contentId} className="space-y-1 px-2 pb-2">
+                      {PRODUCTS_BY_CATEGORY[category].map((product) => {
+                        const isProductActive =
+                          pathname === product.href || pathname.startsWith(`${product.href}/`);
+
+                        return (
+                          <Link
+                            key={product.href}
+                            href={product.href}
+                            className={`block rounded-md border-l-4 px-3 py-2 text-sm transition-colors duration-200 ${
+                              isProductActive
+                                ? "border-racing-yellow bg-white/12 font-semibold text-racing-yellow"
+                                : "border-transparent text-white/85 hover:bg-white/8 hover:text-racing-yellow"
+                            }`}
+                          >
+                            {product.name}
+                          </Link>
+                        );
+                      })}
+                    </div>
+                  )}
+                </div>
+              );
+            })}
+          </div>
+        </aside>
       </div>
     </header>
   );
