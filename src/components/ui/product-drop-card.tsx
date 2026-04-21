@@ -1,6 +1,7 @@
 "use client"
 
 import * as React from "react"
+import Link from "next/link"
 import { ChevronLeft, ChevronRight } from "lucide-react"
 
 
@@ -14,6 +15,7 @@ export interface ProductDropItem {
   summary: string
   sizes: string
   imageSrc: string
+  href: string
   accentClassName?: string
 }
 
@@ -64,11 +66,12 @@ export function ProductItemCard({ item }: { item: ProductDropItem }) {
 
         {/* Overlay with Button (Hover on Desktop, Click on Mobile) */}
         <div className="absolute inset-0 z-30 flex items-center justify-center bg-black/60 opacity-0 backdrop-blur-[2px] transition-all duration-300 group-hover:opacity-100 group-active:opacity-100">
-          <Button 
-            className="skew-x-[-10deg] rounded-none bg-racing-red hover:bg-red-700 px-6 py-5 text-sm font-black italic uppercase tracking-wider text-white border-b-4 border-red-900 transition-transform hover:scale-105 shadow-xl"
+          <Link
+            href={item.href}
+            className="skew-x-[-10deg] rounded-none bg-racing-red hover:bg-red-700 px-6 py-3 text-sm font-black italic uppercase tracking-wider text-white border-b-4 border-red-900 transition-transform hover:scale-105 shadow-xl"
           >
-            <span className="skew-x-[10deg]">Lihat Selengkapnya</span>
-          </Button>
+            <span className="skew-x-[10deg] block">Lihat Selengkapnya</span>
+          </Link>
         </div>
       </div>
 

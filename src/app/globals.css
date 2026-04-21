@@ -80,6 +80,20 @@
 }
 
 @layer utilities {
+  @keyframes wa-float-keyframes {
+    0%,
+    100% {
+      transform: translateY(0);
+    }
+    50% {
+      transform: translateY(-6px);
+    }
+  }
+
+  .wa-float {
+    animation: wa-float-keyframes 2.8s ease-in-out infinite;
+  }
+
   .no-scrollbar::-webkit-scrollbar {
     display: none;
   }

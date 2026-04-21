@@ -3,6 +3,7 @@ import { Space_Grotesk } from "next/font/google";
 import "./globals.css";
 import Navbar from "../components/navbar";
 import Footer from "../components/footer";
+import FloatingWhatsapp from "../components/floating-whatsapp";
 
 const spaceGrotesk = Space_Grotesk({
   variable: "--font-space-grotesk",
@@ -27,6 +28,7 @@ export default function RootLayout({
       <body className="min-h-screen bg-black text-white flex flex-col font-sans overflow-x-hidden">
         <Navbar />
         <main className="flex-grow">{children}</main>
+        <FloatingWhatsapp />
         <Footer />
       </body>
     </html>

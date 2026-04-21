@@ -2,6 +2,7 @@
 
 import { motion } from "framer-motion"
 import SectionHeader from "./section-header"
+import { MARKETPLACE_LINKS } from "@/lib/external-links"
 
 export default function Cta() {
   return (
@@ -54,30 +55,34 @@ export default function Cta() {
             {/* Marketplace Logos */}
             <div className="flex flex-wrap items-center justify-center lg:justify-start gap-6 md:gap-8 pt-2">
               <motion.a
-                href="#"
+                href={MARKETPLACE_LINKS.shopee.href}
+                target="_blank"
+                rel="noopener noreferrer"
                 whileHover={{ scale: 1.05 }}
                 whileTap={{ scale: 0.95 }}
                 className="relative cursor-pointer block bg-white/5 p-4 md:p-5 rounded-2xl border border-white/10 hover:border-racing-yellow/30 transition-all duration-300 hover:shadow-[0_0_20px_rgba(255,215,0,0.15)] will-change-transform transform-gpu"
               >
                 {/* eslint-disable-next-line @next/next/no-img-element */}
                 <img 
-                  src="https://res.cloudinary.com/dxgoshyei/image/upload/v1776493152/logo-shopee_plex8h.webp" 
-                  alt="Shopee Lowkos Auto Clinic"
+                  src={MARKETPLACE_LINKS.shopee.logo}
+                  alt={MARKETPLACE_LINKS.shopee.alt}
                   className="h-14 md:h-16 w-auto object-contain"
                   loading="lazy"
                 />
               </motion.a>
 
               <motion.a
-                href="#"
+                href={MARKETPLACE_LINKS.tokopedia.href}
+                target="_blank"
+                rel="noopener noreferrer"
                 whileHover={{ scale: 1.05 }}
                 whileTap={{ scale: 0.95 }}
                 className="relative cursor-pointer block bg-white/5 p-4 md:p-5 rounded-2xl border border-white/10 hover:border-racing-yellow/30 transition-all duration-300 hover:shadow-[0_0_20px_rgba(255,215,0,0.15)] will-change-transform transform-gpu"
               >
                 {/* eslint-disable-next-line @next/next/no-img-element */}
                 <img 
-                  src="https://res.cloudinary.com/dxgoshyei/image/upload/v1776493152/logo-tokopedia_chwbqf.webp" 
-                  alt="Tokopedia Lowkos Auto Clinic"
+                  src={MARKETPLACE_LINKS.tokopedia.logo}
+                  alt={MARKETPLACE_LINKS.tokopedia.alt}
                   className="h-14 md:h-16 w-auto object-contain"
                   loading="lazy"
                 />

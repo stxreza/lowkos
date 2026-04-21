@@ -3,6 +3,7 @@
 import * as React from "react"
 import { motion } from "framer-motion"
 import SectionHeader from "./section-header"
+import { MARKETPLACE_LINKS } from "@/lib/external-links"
 
 // Icon components using SVG
 const IndonesiaIcon = () => (
@@ -213,29 +214,33 @@ export default function Advantages() {
           {/* Marketplace Logos */}
           <div className="flex flex-wrap justify-center items-center gap-4 lg:gap-16">
             <motion.a
-              href="#"
+              href={MARKETPLACE_LINKS.shopee.href}
+              target="_blank"
+              rel="noopener noreferrer"
               whileHover={{ scale: 1.05 }}
               whileTap={{ scale: 0.95 }}
               className="relative cursor-pointer block"
             >
               {/* eslint-disable-next-line @next/next/no-img-element */}
               <img 
-                src="https://res.cloudinary.com/dxgoshyei/image/upload/v1776493152/logo-shopee_plex8h.webp" 
-                alt="Shopee Lowkos Auto Clinic"
+                src={MARKETPLACE_LINKS.shopee.logo}
+                alt={MARKETPLACE_LINKS.shopee.alt}
                 className="h-16 md:h-28 w-auto object-contain drop-shadow-lg"
               />
             </motion.a>
 
             <motion.a
-              href="#"
+              href={MARKETPLACE_LINKS.tokopedia.href}
+              target="_blank"
+              rel="noopener noreferrer"
               whileHover={{ scale: 1.05 }}
               whileTap={{ scale: 0.95 }}
               className="relative cursor-pointer block"
             >
               {/* eslint-disable-next-line @next/next/no-img-element */}
               <img 
-                src="https://res.cloudinary.com/dxgoshyei/image/upload/v1776493152/logo-tokopedia_chwbqf.webp" 
-                alt="Tokopedia Lowkos Auto Clinic"
+                src={MARKETPLACE_LINKS.tokopedia.logo}
+                alt={MARKETPLACE_LINKS.tokopedia.alt}
                 className="h-16 md:h-28 w-auto object-contain drop-shadow-lg"
               />
             </motion.a>
